@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#101715"><title>Shelf Monitor</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+<aside class="rail">
+  <div class="brand"><span class="brand-icon"><svg viewBox="0 0 32 32"><path d="M5 8h22M5 16h22M5 24h22M9 5v6m7 2v6m7 2v6"/></svg></span><span class="brand-name">shelf<span>mate</span></span></div>
+  <div class="rail-label">WORKSPACE</div><button class="nav active"><span class="nav-ico">▦</span>Overview</button><button class="nav" onclick="document.querySelector('#events').scrollIntoView({behavior:'smooth'})"><span class="nav-ico">◷</span>Event history</button>
+  <div class="rail-bottom"><div class="site-chip"><span class="tiny-dot"></span><div><b>Store room A</b><small>Local network</small></div><span class="dots">···</span></div><div class="profile"><div class="avatar">SM</div><div><b>Shelf monitor</b><small>Administrator</small></div><span class="dots">⌄</span></div></div>
+</aside>
+<main class="main">
+  <header><div><div class="crumb">WORKSPACE <i>/</i> OVERVIEW</div><h1>Good morning <span class="sun">✳</span></h1><p class="subhead">Here’s what’s happening across your shelves.</p></div><div class="header-right"><div class="date" id="date"></div><div class="status-pill"><span class="pulse"></span><span id="system-status">Connecting</span></div></div></header>
+  <section class="summary-row">
+    <article class="stat-card"><div class="stat-top"><span class="stat-icon mint">⌑</span><span class="stat-label">TOTAL PRODUCTS</span><span class="stat-trend">LIVE</span></div><div class="stat-number" id="total">—</div><div class="stat-foot">across <b>4 monitored shelves</b></div></article>
+    <article class="stat-card"><div class="stat-top"><span class="stat-icon coral">⌁</span><span class="stat-label">NEEDS ATTENTION</span><span class="stat-trend alert-trend">NOW</span></div><div class="stat-number" id="attention">—</div><div class="stat-foot">low stock or <b>out of stock</b></div></article>
+    <article class="stat-card"><div class="stat-top"><span class="stat-icon blue">◷</span><span class="stat-label">TODAY’S ACTIVITY</span><span class="stat-trend">TODAY</span></div><div class="stat-number" id="activity">—</div><div class="stat-foot">stock events <b>recorded today</b></div></article>
+    <article class="stat-card"><div class="stat-top"><span class="stat-icon amber">⌕</span><span class="stat-label">CAMERA STATUS</span><span class="stat-trend">LOCAL</span></div><div class="stat-number camera-stat" id="camera-stat">Checking</div><div class="stat-foot">AI detection <b id="model-status">initializing</b></div></article>
+  </section>
+  <section class="content-grid">
+    <article class="panel camera-panel"><div class="panel-head"><div><div class="eyebrow">LIVE MONITOR</div><h2>Camera view <span class="live-tag"><i></i> LIVE</span></h2></div><button class="icon-button" title="Refresh feed" onclick="refreshFeed()">↻</button></div><div class="camera-frame"><img id="feed" src="/api/camera" alt="Live camera stream"><div class="cam-overlay"><span>CAM 01</span><span id="cam-time">--:--:--</span><span class="overlay-quality"><i></i> HD</span></div><div class="camera-help" id="camera-help">Waiting for camera feed…</div></div><div class="camera-foot"><span><i class="tiny-dot"></i><span id="feed-label">Connecting to camera</span></span><span>4 regions detected</span></div></article>
+    <article class="panel alerts-panel"><div class="panel-head"><div><div class="eyebrow">ACTIVITY</div><h2>Recent alerts <span class="count-badge" id="alert-count">0</span></h2></div><button class="text-button" onclick="document.querySelector('#events').scrollIntoView({behavior:'smooth'})">View all <span>↗</span></button></div><div class="alert-list" id="alerts"></div><div class="empty-state hidden" id="alerts-empty"><span>◷</span><b>All caught up</b><small>New shelf activity will show here.</small></div></article>
+  </section>
+  <section class="panel shelves-panel"><div class="panel-head"><div><div class="eyebrow">INVENTORY</div><h2>Shelf overview <span class="section-caption">Stock levels update automatically</span></h2></div><div class="legend"><span><i class="legend-dot green"></i>Healthy</span><span><i class="legend-dot yellow"></i>Low</span><span><i class="legend-dot red"></i>Empty</span></div></div><div class="shelf-grid" id="shelves"></div></section>
+  <section class="panel events-panel" id="events"><div class="panel-head"><div><div class="eyebrow">AUDIT TRAIL</div><h2>Event history <span class="section-caption">Recent inventory changes and detections</span></h2></div><button class="text-button" onclick="loadData()">Refresh <span>↻</span></button></div><div class="table-wrap"><table><thead><tr><th>EVENT</th><th>SHELF</th><th>PRODUCT</th><th>QUANTITY CHANGE</th><th>DATE &amp; TIME</th><th>EVIDENCE</th></tr></thead><tbody id="event-rows"></tbody></table></div><div class="table-empty hidden" id="events-empty">No events recorded yet. Changes will appear here automatically.</div></section>
+  <footer><span>© 2025 Shelfmate · Local inventory intelligence</span><span>Processing on device <i class="tiny-dot"></i></span></footer>
+</main><script src="/static/app.js"></script></body></html>

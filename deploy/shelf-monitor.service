@@ -1,0 +1,17 @@
+[Unit]
+Description=Shelfmate local shelf monitoring dashboard
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=pi
+WorkingDirectory=/opt/shelf-monitor
+EnvironmentFile=/opt/shelf-monitor/.env
+ExecStart=/opt/shelf-monitor/.venv/bin/uvicorn app.main:app --host 0.0.0.0 --port 8000
+Restart=always
+RestartSec=4
+NoNewPrivileges=true
+
+[Install]
+WantedBy=multi-user.target
